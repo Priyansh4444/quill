@@ -1,7 +1,5 @@
 "use client"
 
-'use client'
-
 import { trpc } from '@/app/_trpc/client'
 import { absoluteUrl } from '@/lib/utils'
 import {

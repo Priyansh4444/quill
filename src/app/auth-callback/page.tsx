@@ -2,6 +2,11 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { trpc } from '../_trpc/client'
+import {
+  QueryCache,
+  QueryClient,
+} from "@tanstack/react-query";
 
 const Page = () => {
   const router = useRouter()
@@ -16,7 +21,7 @@ const Page = () => {
         router.push(origin ? `/${origin}` : '/dashboard')
       }
     },
-    onError: (err) => {
+    onError: (err: any) => {
       if (err.data?.code === 'UNAUTHORIZED') {
         router.push('/sign-in')
       }
