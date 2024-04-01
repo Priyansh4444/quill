@@ -17,8 +17,8 @@ import { useState } from 'react'
 import { getUserSubscriptionPlan } from '@/lib/stripe'
 
 interface PageProps {
-  subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>
-}
+  subscriptionPlan: Awaited47001ReturnType<typeof getUserSubscriptionPlan>>
+};
 
 const Dashboard = ({subscriptionPlan}: PageProps) => {
   const [currentlyDeletingFile, setCurrentlyDeletingFile] =
