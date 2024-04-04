@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { openai } from "@/lib/openai";
-import { getPineconeClient } from "@/lib/pinecone";
+import { client } from "@/lib/pinecone";
 import { SendMessageValidator } from "@/lib/validators/SendMessageValidator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
@@ -14,10 +14,11 @@ export const POST = async (req: NextRequest) => {
 
   const body = await req.json();
 
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const { getUser } =  await getKindeServerSession();
+  const user = await getUser();
 
-  const { id: userId } = user;
+
+  const { id: userId } = user!;
 
   if (!userId) return new Response("Unauthorized", { status: 401 });
 
@@ -46,7 +47,7 @@ export const POST = async (req: NextRequest) => {
     openAIApiKey: process.env.OPENAI_API_KEY,
   });
 
-  const pinecone = await getPineconeClient();
+  const pinecone = await client();
   const pineconeIndex = pinecone.Index("quill");
 
   const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
@@ -104,7 +105,7 @@ export const POST = async (req: NextRequest) => {
   });
 
   const stream = OpenAIStream(response, {
-    async onCompletion(completion) {
+    async onCompletion(completion: any) {
       await db.message.create({
         data: {
           text: completion,

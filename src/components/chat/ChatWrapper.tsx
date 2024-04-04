@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { ChatContextProvider } from './ChatContext'
 import { PLANS } from '@/config/stripe'
+import { Query } from '@tanstack/react-query'
 
 interface ChatWrapperProps {
   fileId: string
@@ -25,8 +26,8 @@ const ChatWrapper = ({
       },
       {
         refetchInterval: (data) =>
-          data?.status === 'SUCCESS' ||
-          data?.status === 'FAILED'
+          data?.state.data?.status === 'SUCCESS' ||
+          data?.state.data?.status === 'FAILED'
             ? false
             : 500,
       }
@@ -86,9 +87,9 @@ const ChatWrapper = ({
               </span>{' '}
               plan supports up to{' '}
               {isSubscribed
-                ? PLANS.find((p) => p.name === 'Pro')
+                ? PLANS.find((p: any) => p.name === 'Pro')
                     ?.pagesPerPdf
-                : PLANS.find((p) => p.name === 'Free')
+                : PLANS.find((p: any) => p.name === 'Free')
                     ?.pagesPerPdf}{' '}
               pages per PDF.
             </p>
