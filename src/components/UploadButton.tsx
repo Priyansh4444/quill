@@ -15,6 +15,7 @@ import { useUploadThing } from '@/lib/uploadthing'
 import { useToast } from './ui/use-toast'
 import { trpc } from '@/app/_trpc/client'
 import { useRouter } from 'next/navigation'
+import { ClientUploadedFileData } from 'uploadthing/types'
 
 const UploadDropzone = ({
   isSubscribed,
@@ -78,7 +79,7 @@ const UploadDropzone = ({
           })
         }
 
-        const [fileResponse] = res
+        const [fileResponse]: ClientUploadedFileData<null>[] = res
 
         const key = fileResponse?.key
 
