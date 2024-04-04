@@ -24,10 +24,9 @@ const Messages = ({ fileId }: MessagesProps) => {
       {
         getNextPageParam: (lastPage) =>
           lastPage?.nextCursor,
-        keepPreviousData: true,
       }
     )
-
+// Not normal map since you dont want an array array
   const messages = data?.pages.flatMap(
     (page) => page.messages
   )
