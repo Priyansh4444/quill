@@ -58,8 +58,10 @@ export const ChatContextProvider = ({ fileId, children }: Props) => {
 
       // step 2
       const previousMessages = utils.getFileMessages.getInfiniteData();
+      // this was like an api call
 
       // step 3
+      // inserting the messages as soon as we get it
       utils.getFileMessages.setInfiniteData(
         { fileId, limit: INFINITE_QUERY_LIMIT },
         (old) => {
@@ -69,10 +71,11 @@ export const ChatContextProvider = ({ fileId, children }: Props) => {
               pageParams: [],
             };
           }
-
+          // cloning the old pages
           let newPages = [...old.pages];
-
+          // latest page is the first page
           let latestPage = newPages[0]!;
+          // latests 10 pages
 
           latestPage.messages = [
             {
@@ -85,7 +88,7 @@ export const ChatContextProvider = ({ fileId, children }: Props) => {
           ];
 
           newPages[0] = latestPage;
-
+          // Injecting the new page inside the old pages
           return {
             ...old,
             pages: newPages,
