@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { getUserSubscriptionPlan } from '@/lib/stripe'
 
 interface PageProps {
-  subscriptionPlan: Awaited47001ReturnType<typeof getUserSubscriptionPlan>>
+  subscriptionPlan: ReturnType<typeof getUserSubscriptionPlan>
 };
 
 const Dashboard = ({subscriptionPlan}: PageProps) => {
